@@ -1,0 +1,64 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog" style="background: rgba(0,0,0,0.5)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ task ? 'Edit Task' : 'Add Task' }}</h5>
+                    <button type="button" class="btn-close" (click)="close.emit()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Title</label>
+                        <input class="form-control" formControlName="title" />
+                        <div class="text-danger" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+                            Title is required.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <textarea class="form-control" formControlName="description"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <select class="form-control" formControlName="status">
+                            <option value="">...</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <div class="text-danger" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
+                            Status is required.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Priority</label>
+                        <select class="form-control" formControlName="priority">
+                            <option value="">...</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <div class="text-danger" *ngIf="form.get('priority')?.touched && form.get('priority')?.invalid">
+                            Priority is required.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Due Date</label>
+                        <input class="form-control" type="date" formControlName="dueDate" />
+                        <div class="text-danger" *ngIf="form.get('dueDate')?.touched && form.get('dueDate')?.invalid">
+                            Due date is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" (click)="close.emit()">Cancel</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Charts</h2>
+        <button class="btn btn-info me-2" (click)="router.navigateByUrl('/mainmenu')">
+            <i class="fa fa-bars" aria-hidden="true"></i> Main Menu
+        </button>
+    </div>
+    <canvas baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="'bar'">
+    </canvas>
+</div>
+  

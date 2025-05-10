@@ -1,0 +1,63 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Tasks</h2>
+        <div>
+            <button class="btn btn-danger me-2" (click)="tasks.clearAll()">
+                <i class="fa fa-trash" aria-hidden="true"></i> Delete All
+            </button>
+            <button class="btn btn-info me-2" (click)="router.navigateByUrl('/mainmenu')">
+                <i class="fa fa-bars" aria-hidden="true"></i> Main Menu
+            </button>
+            <button class="btn btn-success" (click)="openModal()">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Task
+            </button>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of tasks.tasks()">
+                <td>{{ task.title }}</td>
+                <td>
+                    <span class="badge" [ngClass]="{
+                          'bg-warning': task.status === 'pending',
+                          'bg-success': task.status === 'completed'
+                        }">
+                        {{ task.status }}
+                    </span>
+                </td>
+                <td>
+                    <span class="badge" [ngClass]="{
+                          'bg-secondary': task.priority === 'low',
+                          'bg-info': task.priority === 'medium',
+                          'bg-danger': task.priority === 'high'
+                        }">
+                        {{ task.priority || '-' }}
+                    </span>
+                </td>
+                <td>{{ task.dueDate ? (task.dueDate | date: 'dd/MM/yyyy') : '-' }}</td>
+                <td>{{ task.description || '-' }}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-primary m-1" (click)="editTask(task)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger m-1" (click)="deleteTask(task.id)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<app-task-form *ngIf="modalOpen" [task]="selectedTask" (save)="onSave($event)" (close)="modalOpen = false" />
